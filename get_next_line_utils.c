@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:35:14 by axcastil          #+#    #+#             */
-/*   Updated: 2023/10/30 01:49:37 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/10/31 19:18:31 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 
 	new_str = NULL;
 	if (!*s || ft_strlen(s) <= start)
-		return (emptystr(""));
+		return (ft_strdup(""));
 	if (ft_strlen(s + start) <= len)
 		len = ft_strlen(s + start);
 	new_str = (char *)malloc(len + 1);
@@ -88,11 +88,21 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (new_str);
 }
 
-char	*emptystr(char *str)
+char	*ft_strdup(const char *s1)
 {
-	char	*new;
+	char	*duplicate;
+	char	*aux;
 
-	new = malloc(1);
-	new = "\0";
-	return (new);
+	duplicate = (char *)malloc(ft_strlen(s1) + 1);
+	if (!duplicate)
+		return (NULL);
+	aux = duplicate;
+	while (*s1)
+	{
+		*duplicate = *s1;
+		duplicate++;
+		s1++;
+	}
+	*duplicate = '\0';
+	return (aux);
 }

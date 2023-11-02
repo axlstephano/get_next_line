@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 00:33:57 by axcastil          #+#    #+#             */
-/*   Updated: 2023/10/30 10:48:08 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/10/31 19:18:48 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
-char	*emptystr(char *str);
+char	*ft_strdup(const char *s1);
 
 #endif
