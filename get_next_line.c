@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:40:53 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/08 20:36:56 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:53:39 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*reader(int fd, char *result)
 
 	if(!result)
 		result = ft_calloc(1, 1);
-	buffer = ft_calloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	byte_read = 1;
 	while(byte_read > 0)
 	{
@@ -32,7 +32,7 @@ char	*reader(int fd, char *result)
 			break;
 	}
 	free(buffer);
-		
+	return (result);
 }
 
 get_next_line(int fd)
