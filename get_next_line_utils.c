@@ -6,12 +6,12 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:35:14 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/08 20:43:22 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:44:13 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-hola
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	a;
