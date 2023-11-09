@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:35:14 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/09 20:17:37 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/09 20:50:42 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,13 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ft_bzero(string, count * size);
 	return (string);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)s;
+	while (n--)
+		*ptr++ = '\0';
 }

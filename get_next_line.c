@@ -6,11 +6,16 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:40:53 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/09 20:25:26 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:02:20 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*nextline(char *result)
+{
+	
+}
 
 char	*liner(char *buffer)
 {
@@ -47,7 +52,7 @@ char	*reader(int fd, char *result)
 		if (byte_read == -1)
 			return (NULL);
 		buffer[byte_read] = '\0';
-		result = joinline(result, buffer);
+		result = ft_strjoin(result, buffer);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -75,7 +80,8 @@ int main(void)
 	char	*parson;
 
 	fd = open("text.txt", O_RDONLY);
-	//parson = get_next_line(fd);
-	printf("%d", yo(fd));
+	parson = get_next_line(fd);
+	printf("%s", parson);
+	close(fd);
 	return (0);
 }
