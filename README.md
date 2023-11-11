@@ -28,4 +28,3 @@ while ((line = get_next_line(fd)) != NULL) {
     printf("%s", line);
     free(line); // Remember to free the line when you're done with it
 }
-S
