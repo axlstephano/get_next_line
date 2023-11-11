@@ -12,11 +12,6 @@
 
 #include "get_next_line.h"
 
-char	*nextline(char *result)
-{
-	
-}
-
 char	*liner(char *buffer)
 {
 	char	*newline;
