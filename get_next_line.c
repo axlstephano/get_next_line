@@ -6,11 +6,21 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/11 21:39:04 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:52:57 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*joinandfree(char *result, char *buffer)
+{
+	char	*line;
+
+	line = NULL;
+	line = ft_strjoin(result, buffer);
+	free(result);
+	return (line);
+}
 
 char	*next_line(char	*buffer)
 {
@@ -22,15 +32,16 @@ char	*next_line(char	*buffer)
 	while(buffer[i] != '\n' && buffer[i])
 		i++;
 	if (buffer[i] == '\0')
-		return (NULL);
+		return (free(buffer), NULL);
 	i ++;
-	next = malloc(((ft_strlen(buffer)) - i) + 1 * sizeof(char));
+	next = malloc(((ft_strlen(buffer)) - i + 1) * sizeof(char));
 	if (!next)
 		return(NULL);
 	j = 0;
 	while (buffer[i])
 		next[j++] = buffer[i++];
 	next[j] = '\0';
+	free(buffer);
 	return (next);
 }
 
@@ -40,22 +51,13 @@ char	*liner(char	*buffer)
 	int		len;
 
 	len = 0;
+	if(buffer[len] == 0)
+		return (NULL);
 	while(buffer[len] != '\n' && buffer[len] != '\0')
 		len ++;
-	if(buffer[len] == '\0')
-		return (NULL);
 	len ++;
 	new_line = ft_substr(buffer, 0, len);
 	return(new_line);
-}
-
-char	*joinandfree(char *result, char *buffer)
-{
-	char	*line;
-
-	line = ft_strjoin(result, buffer);
-	free(result);
-	return (line);
 }
 
 char	*reader(int fd,char *result)
@@ -76,8 +78,8 @@ char	*reader(int fd,char *result)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if  (byte_read == -1)
-			return (NULL);
-		buffer[byte_read] = '\0';
+			return (free(buffer), NULL);
+		buffer[byte_read] = 0;
 		result = joinandfree(result, buffer);
 		if (ft_strchr(buffer, '\n'))
 			break;
@@ -119,7 +121,7 @@ int main()
         free(result);
         result = get_next_line(fd);
     }
-	//atexit(s);
     close(fd);
+	atexit(s);
     return(0);
 }
