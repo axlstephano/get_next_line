@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/11 21:52:57 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:55:29 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ int main()
         result = get_next_line(fd);
     }
     close(fd);
-	atexit(s);
+	//atexit(s);
     return(0);
 }
