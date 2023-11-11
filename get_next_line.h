@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 00:33:57 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/09 20:51:07 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:57:02 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 4
 # endif
 
 # include <unistd.h>

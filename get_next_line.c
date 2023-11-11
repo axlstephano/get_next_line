@@ -6,11 +6,20 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:40:53 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/09 21:02:20 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:03:49 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*joinandfree(char *buffer1, char *buffer2)
+{
+	char	*new;
+
+	new = ft_strjoin(buffer1, buffer2);
+	free(buffer1);
+	return(new);
+}
 
 char	*liner(char *buffer)
 {
@@ -18,11 +27,11 @@ char	*liner(char *buffer)
 	size_t	len;
 
 	len = 0;
-	while (!buffer[len] && buffer[len] != '\n')
+	while (buffer[len] && buffer[len] != '\n')
 		len++;
 	newline = (char *)ft_calloc((len + 2), sizeof(char));
 	len = 0;
-	while (!buffer && buffer[len] != '\n')
+	while (buffer[len] && buffer[len] != '\n')
 	{
 		newline[len] = buffer[len];
 		len++;
@@ -35,7 +44,7 @@ char	*liner(char *buffer)
 char	*reader(int fd, char *result)
 {
 	char	*buffer;
-	size_t	byte_read;
+	ssize_t	byte_read;
 
 	if (!result)
 		result = ft_calloc(1, 1);
@@ -47,7 +56,7 @@ char	*reader(int fd, char *result)
 		if (byte_read == -1)
 			return (NULL);
 		buffer[byte_read] = '\0';
-		result = ft_strjoin(result, buffer);
+		result = joinandfree(result, buffer);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -65,7 +74,8 @@ char	*get_next_line(int fd)
 	result = reader(fd, result);
 	if (!result)
 		return (NULL);
-	line = liner(result);
+	//line = liner(result);
+	//buffer = nextline(buffer);
 	return (line);
 }
 
