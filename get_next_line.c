@@ -1,69 +1,85 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   getit.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 16:40:53 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/11 19:13:20 by axcastil         ###   ########.fr       */
+/*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
+/*   Updated: 2023/11/11 21:07:28 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*joinandfree(char *buffer1, char *buffer2)
-{
-	char	*new;
-
-	new = ft_strjoin(buffer1, buffer2);
-	free(buffer1);
-	return(new);
-}
-
 char	*next_line(char	*buffer)
 {
-	
+	char	*next;
+	int		i;
+	int		j;
+
+	i = 0;
+	while(buffer[i] != '\n' && buffer[i])
+		i++;
+	if (buffer[i] == '\0')
+		return (NULL);
+	i ++;
+	next = malloc(((ft_strlen(buffer)) - i) + 1 * sizeof(char));
+	if (!next)
+		return(NULL);
+	j = 0;
+	while (buffer[i])
+		next[j++] = buffer[i++];
+	next[j] = '\0';
+	//printf("%s", next);
+	return (next);
 }
 
-char	*liner(char *buffer)
+char	*liner(char	*buffer)
 {
-	char	*newline;
-	size_t	len;
+	char	*new_line;
+	int		len;
 
 	len = 0;
-	while (buffer[len] && buffer[len] != '\n')
-		len++;
-	newline = (char *)ft_calloc((len + 2), sizeof(char));
-	len = 0;
-	while (buffer[len] && buffer[len] != '\n')
-	{
-		newline[len] = buffer[len];
-		len++;
-	}
-	if (buffer[len] == '\n')
-		newline[len] = '\n';
-	return (newline);
+	while(buffer[len] != '\n')
+		len ++;
+	len ++;
+	new_line = ft_substr(buffer, 0, len);
+	return(new_line);
 }
 
-char	*reader(int fd, char *result)
+char	*joinandfree(char *result, char *buffer)
 {
-	char	*buffer;
+	char	*line;
+
+	line = ft_strjoin(result, buffer);
+	free(result);
+	return (line);
+}
+
+char	*reader(int fd,char *result)
+{
 	ssize_t	byte_read;
+	char	*buffer;
 
 	if (!result)
-		result = ft_calloc(1, 1);
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	byte_read = 1;
-	while (byte_read > 0)
 	{
-		byte_read = read(fd, buffer, BUFFER_SIZE + 1);
-		if (byte_read == -1)
+		result = malloc(1 * sizeof(char));
+		result[0] = '\0';
+	}
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	byte_read = 1;
+	while(byte_read > 0)
+	{
+		byte_read = read(fd, buffer, BUFFER_SIZE);
+		if  (byte_read == -1)
 			return (NULL);
 		buffer[byte_read] = '\0';
 		result = joinandfree(result, buffer);
 		if (ft_strchr(buffer, '\n'))
-			break ;
+			break;
 	}
 	free(buffer);
 	return (result);
@@ -72,10 +88,10 @@ char	*reader(int fd, char *result)
 char	*get_next_line(int fd)
 {
 	static char	*result;
-	char		*new_line;
+	char	*new_line;
 
-	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return(NULL);
 	result = reader(fd, result);
 	if (!result)
 		return (NULL);
@@ -84,16 +100,20 @@ char	*get_next_line(int fd)
 	return (new_line);
 }
 
-int main(void)
-{
-	int		fd;
-	char	*parson;
-
-	fd = open("text.txt", O_RDONLY);
-	parson = get_next_line(fd);
-	printf("%s", parson);
-	parson = get_next_line(fd);
-	printf("%s", parson);
-	close(fd);
-	return (0);
-}
+//int main()
+//{
+//    int fd;
+//    char *result;
+//    fd = open("text.txt", O_RDONLY);
+//    if (fd == -1)
+//        return (0);
+//    result = get_next_line(fd);
+//    while (result != NULL)
+//    {
+//        printf("%s",result);
+//        free(result);
+//        result = get_next_line(fd);
+//    }
+//    close(fd);
+//    return(0);
+//}

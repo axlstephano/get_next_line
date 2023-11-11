@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:35:14 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/11 17:56:28 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:17:57 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,43 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
-	char	*string;
+	char	*new_str;
+	size_t	i;
+	size_t	j;
 
-	if (count == SIZE_MAX || size == SIZE_MAX)
+	new_str = NULL;
+	if (!*s || ft_strlen(s) <= start)
+		return (ft_strdup("\0"));
+	if (ft_strlen(s + start) <= len)
+		len = ft_strlen(s + start);
+	new_str = (char *)malloc(len + 1);
+	if (!new_str)
 		return (NULL);
-	string = malloc(count * size);
-	if (!string)
-		return (NULL);
-	ft_bzero(string, count * size);
-	return (string);
+	i = start;
+	j = 0;
+	while (i < ft_strlen(s) && j < len)
+		new_str[j++] = s[i++];
+	new_str[j] = '\0';
+	return (new_str);
 }
 
-void	ft_bzero(void *s, size_t n)
+char	*ft_strdup(const char *s1)
 {
-	unsigned char	*ptr;
+	char	*duplicate;
+	char	*aux;
 
-	ptr = (unsigned char *)s;
-	while (n--)
-		*ptr++ = '\0';
+	duplicate = (char *)malloc(ft_strlen(s1) + 1);
+	if (!duplicate)
+		return (NULL);
+	aux = duplicate;
+	while (*s1)
+	{
+		*duplicate = *s1;
+		duplicate++;
+		s1++;
+	}
+	*duplicate = '\0';
+	return (aux);
 }
