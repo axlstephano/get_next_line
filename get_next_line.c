@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getit.c                                            :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/11 21:07:28 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:39:04 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*next_line(char	*buffer)
 	while (buffer[i])
 		next[j++] = buffer[i++];
 	next[j] = '\0';
-	//printf("%s", next);
 	return (next);
 }
 
@@ -41,8 +40,10 @@ char	*liner(char	*buffer)
 	int		len;
 
 	len = 0;
-	while(buffer[len] != '\n')
+	while(buffer[len] != '\n' && buffer[len] != '\0')
 		len ++;
+	if(buffer[len] == '\0')
+		return (NULL);
 	len ++;
 	new_line = ft_substr(buffer, 0, len);
 	return(new_line);
@@ -99,21 +100,26 @@ char	*get_next_line(int fd)
 	result = next_line(result);
 	return (new_line);
 }
+void	s()
+{
+	system("leaks -q a.out");
+}
 
-//int main()
-//{
-//    int fd;
-//    char *result;
-//    fd = open("text.txt", O_RDONLY);
-//    if (fd == -1)
-//        return (0);
-//    result = get_next_line(fd);
-//    while (result != NULL)
-//    {
-//        printf("%s",result);
-//        free(result);
-//        result = get_next_line(fd);
-//    }
-//    close(fd);
-//    return(0);
-//}
+int main()
+{
+    int fd;
+    char *result;
+    fd = open("text.txt", O_RDONLY);
+    if (fd == -1)
+        return (0);
+    result = get_next_line(fd);
+    while (result != NULL)
+    {
+        printf("%s",result);
+        free(result);
+        result = get_next_line(fd);
+    }
+	//atexit(s);
+    close(fd);
+    return(0);
+}
