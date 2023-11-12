@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/11 21:55:29 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:55:28 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ char	*next_line(char	*buffer)
 	int		j;
 
 	i = 0;
-	while(buffer[i] != '\n' && buffer[i])
+	while (buffer[i] != '\n' && buffer[i])
 		i++;
 	if (buffer[i] == '\0')
 		return (free(buffer), NULL);
 	i ++;
 	next = malloc(((ft_strlen(buffer)) - i + 1) * sizeof(char));
 	if (!next)
-		return(NULL);
+		return (NULL);
 	j = 0;
 	while (buffer[i])
 		next[j++] = buffer[i++];
@@ -51,16 +51,16 @@ char	*liner(char	*buffer)
 	int		len;
 
 	len = 0;
-	if(buffer[len] == 0)
+	if (buffer[len] == 0)
 		return (NULL);
-	while(buffer[len] != '\n' && buffer[len] != '\0')
+	while (buffer[len] != '\n' && buffer[len] != '\0')
 		len ++;
 	len ++;
 	new_line = ft_substr(buffer, 0, len);
-	return(new_line);
+	return (new_line);
 }
 
-char	*reader(int fd,char *result)
+char	*reader(int fd, char *result)
 {
 	ssize_t	byte_read;
 	char	*buffer;
@@ -74,15 +74,15 @@ char	*reader(int fd,char *result)
 	if (!buffer)
 		return (NULL);
 	byte_read = 1;
-	while(byte_read > 0)
+	while (byte_read > 0)
 	{
 		byte_read = read(fd, buffer, BUFFER_SIZE);
-		if  (byte_read == -1)
+		if (byte_read == -1)
 			return (free(buffer), NULL);
 		buffer[byte_read] = 0;
 		result = joinandfree(result, buffer);
 		if (ft_strchr(buffer, '\n'))
-			break;
+			break ;
 	}
 	free(buffer);
 	return (result);
@@ -91,10 +91,17 @@ char	*reader(int fd,char *result)
 char	*get_next_line(int fd)
 {
 	static char	*result;
-	char	*new_line;
+	char		*new_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return(NULL);
+	{
+		if (result)
+		{
+			free(result);
+			result = NULL;
+		}
+		return (NULL);
+	}
 	result = reader(fd, result);
 	if (!result)
 		return (NULL);
@@ -102,26 +109,22 @@ char	*get_next_line(int fd)
 	result = next_line(result);
 	return (new_line);
 }
-void	s()
-{
-	system("leaks -q a.out");
-}
 
-int main()
-{
-    int fd;
-    char *result;
-    fd = open("text.txt", O_RDONLY);
-    if (fd == -1)
-        return (0);
-    result = get_next_line(fd);
-    while (result != NULL)
-    {
-        printf("%s",result);
-        free(result);
-        result = get_next_line(fd);
-    }
-    close(fd);
-	//atexit(s);
-    return(0);
-}
+//int main()
+//{
+//    int fd;
+//    char *result;
+//    fd = open("text.txt", O_RDONLY);
+//    if (fd == -1)
+//        return (0);
+//    result = get_next_line(fd);
+//    while (result != NULL)
+//    {
+//        printf("%s",result);
+//        free(result);
+//        result = get_next_line(fd);
+//    }
+//    close(fd);
+//	atexit(s);
+//    return(0);
+//}
