@@ -6,23 +6,23 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:20:54 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/13 18:06:43 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:01:30 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*joinandfree(char *result, char *buffer)
+char	*joinandfree_b(char *result, char *buffer)
 {
 	char	*line;
 
 	line = NULL;
-	line = ft_strjoin(result, buffer);
+	line = ft_strjoin_b(result, buffer);
 	free(result);
 	return (line);
 }
 
-char	*next_line(char	*buffer)
+char	*next_line_b(char	*buffer)
 {
 	char	*next;
 	int		i;
@@ -34,7 +34,7 @@ char	*next_line(char	*buffer)
 	if (buffer[i] == '\0')
 		return (free(buffer), NULL);
 	i ++;
-	next = malloc(((ft_strlen(buffer)) - i + 1) * sizeof(char));
+	next = malloc(((ft_strlen_b(buffer)) - i + 1) * sizeof(char));
 	if (!next)
 		return (NULL);
 	j = 0;
@@ -45,7 +45,7 @@ char	*next_line(char	*buffer)
 	return (next);
 }
 
-char	*liner(char	*buffer)
+char	*liner_b(char	*buffer)
 {
 	char	*new_line;
 	int		len;
@@ -56,11 +56,11 @@ char	*liner(char	*buffer)
 	while (buffer[len] != '\n' && buffer[len] != '\0')
 		len ++;
 	len ++;
-	new_line = ft_substr(buffer, 0, len);
+	new_line = ft_substr_b(buffer, 0, len);
 	return (new_line);
 }
 
-char	*reader(int fd, char *result)
+char	*reader_b(int fd, char *result)
 {
 	ssize_t	byte_read;
 	char	*buffer;
@@ -80,8 +80,8 @@ char	*reader(int fd, char *result)
 		if (byte_read == -1)
 			return (free(buffer), NULL);
 		buffer[byte_read] = 0;
-		result = joinandfree(result, buffer);
-		if (ft_strchr(buffer, '\n'))
+		result = joinandfree_b(result, buffer);
+		if (ft_strchr_b(buffer, '\n'))
 			break ;
 	}
 	free(buffer);
@@ -90,7 +90,7 @@ char	*reader(int fd, char *result)
 
 char	*get_next_line(int fd)
 {
-	static char	*result[1024];
+	static char	*result[4096];
 	char		*new_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -102,11 +102,11 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
-	result[fd] = reader(fd, result[fd]);
+	result[fd] = reader_b(fd, result[fd]);
 	if (!result[fd])
 		return (free(result[fd]), NULL);
-	new_line = liner(result[fd]);
-	result[fd] = next_line(result[fd]);
+	new_line = liner_b(result[fd]);
+	result[fd] = next_line_b(result[fd]);
 	return (new_line);
 }
 //int main()

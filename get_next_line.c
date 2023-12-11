@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
-/*   Updated: 2023/11/13 16:57:47 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:36:47 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,6 @@ char	*reader(int fd, char *result)
 	ssize_t	byte_read;
 	char	*buffer;
 
-	if (!result)
-	{
-		result = malloc(1 * sizeof(char));
-		result[0] = '\0';
-	}
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
@@ -102,6 +97,11 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
+	if (!result)
+	{
+		result = malloc(1 * sizeof(char));
+		result[0] = '\0';
+	}
 	result = reader(fd, result);
 	if (!result)
 		return (NULL);
@@ -110,21 +110,21 @@ char	*get_next_line(int fd)
 	return (new_line);
 }
 
-//int main()
-//{
-//    int fd;
-//    char *result;
-//    fd = open("text.txt", O_RDONLY);
-//    if (fd == -1)
-//        return (0);
-//    result = get_next_line(fd);
-//    while (result != NULL)
-//    {
-//        printf("%s",result);
-//        free(result);
-//        result = get_next_line(fd);
-//    }
-//    close(fd);
-//	atexit(s);
-//    return(0);
-//}
+/*int main()
+{
+    int fd;
+    char *result;
+    fd = open("text.txt", O_RDONLY);
+    if (fd == -1)
+        return (0);
+    result = get_next_line(fd);
+	while(result)
+	{
+    	printf("%s",result);
+    	free(result);
+		result = get_next_line(fd);
+	}
+    close(fd);
+	system("leaks -q a.out");
+    return(0);
+}*/
