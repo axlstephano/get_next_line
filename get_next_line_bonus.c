@@ -6,23 +6,22 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:20:54 by axcastil          #+#    #+#             */
-/*   Updated: 2023/12/11 18:01:30 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/12/27 19:37:51 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*joinandfree_b(char *result, char *buffer)
+char	*joinandfree(char *result, char *buffer)
 {
 	char	*line;
 
-	line = NULL;
-	line = ft_strjoin_b(result, buffer);
+	line = ft_strjoin(result, buffer);
 	free(result);
 	return (line);
 }
 
-char	*next_line_b(char	*buffer)
+char	*next_line(char	*buffer)
 {
 	char	*next;
 	int		i;
@@ -31,12 +30,13 @@ char	*next_line_b(char	*buffer)
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i])
 		i++;
-	if (buffer[i] == '\0')
-		return (free(buffer), NULL);
-	i ++;
-	next = malloc(((ft_strlen_b(buffer)) - i + 1) * sizeof(char));
-	if (!next)
+	if (!buffer[i])
+	{
+		free(buffer);
 		return (NULL);
+	}
+	next = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
+	i ++;
 	j = 0;
 	while (buffer[i])
 		next[j++] = buffer[i++];
@@ -45,7 +45,7 @@ char	*next_line_b(char	*buffer)
 	return (next);
 }
 
-char	*liner_b(char	*buffer)
+char	*liner(char	*buffer)
 {
 	char	*new_line;
 	int		len;
@@ -56,23 +56,18 @@ char	*liner_b(char	*buffer)
 	while (buffer[len] != '\n' && buffer[len] != '\0')
 		len ++;
 	len ++;
-	new_line = ft_substr_b(buffer, 0, len);
+	new_line = ft_substr(buffer, 0, len);
 	return (new_line);
 }
 
-char	*reader_b(int fd, char *result)
+char	*reader(int fd, char *result)
 {
-	ssize_t	byte_read;
+	int		byte_read;
 	char	*buffer;
 
 	if (!result)
-	{
-		result = malloc(1 * sizeof(char));
-		result[0] = '\0';
-	}
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
+		result = ft_calloc(1, sizeof(char));
+	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	byte_read = 1;
 	while (byte_read > 0)
 	{
@@ -80,8 +75,8 @@ char	*reader_b(int fd, char *result)
 		if (byte_read == -1)
 			return (free(buffer), NULL);
 		buffer[byte_read] = 0;
-		result = joinandfree_b(result, buffer);
-		if (ft_strchr_b(buffer, '\n'))
+		result = joinandfree(result, buffer);
+		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	free(buffer);
@@ -90,7 +85,7 @@ char	*reader_b(int fd, char *result)
 
 char	*get_next_line(int fd)
 {
-	static char	*result[4096];
+	static char	*result[1024];
 	char		*new_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -102,11 +97,11 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
-	result[fd] = reader_b(fd, result[fd]);
+	result[fd] = reader(fd, result[fd]);
 	if (!result[fd])
 		return (free(result[fd]), NULL);
-	new_line = liner_b(result[fd]);
-	result[fd] = next_line_b(result[fd]);
+	new_line = liner(result[fd]);
+	result[fd] = next_line(result[fd]);
 	return (new_line);
 }
 //int main()

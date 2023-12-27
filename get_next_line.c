@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
-/*   Updated: 2023/12/11 18:36:47 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/12/27 19:34:30 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*joinandfree(char *result, char *buffer)
 {
 	char	*line;
 
-	line = NULL;
 	line = ft_strjoin(result, buffer);
 	free(result);
 	return (line);
@@ -31,12 +30,13 @@ char	*next_line(char	*buffer)
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i])
 		i++;
-	if (buffer[i] == '\0')
-		return (free(buffer), NULL);
-	i ++;
-	next = malloc(((ft_strlen(buffer)) - i + 1) * sizeof(char));
-	if (!next)
+	if (!buffer[i])
+	{
+		free(buffer);
 		return (NULL);
+	}
+	next = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
+	i ++;
 	j = 0;
 	while (buffer[i])
 		next[j++] = buffer[i++];
@@ -62,12 +62,12 @@ char	*liner(char	*buffer)
 
 char	*reader(int fd, char *result)
 {
-	ssize_t	byte_read;
+	int		byte_read;
 	char	*buffer;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
+	if (!result)
+		result = ft_calloc(1, sizeof(char));
+	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	byte_read = 1;
 	while (byte_read > 0)
 	{
@@ -97,11 +97,6 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
-	if (!result)
-	{
-		result = malloc(1 * sizeof(char));
-		result[0] = '\0';
-	}
 	result = reader(fd, result);
 	if (!result)
 		return (NULL);
@@ -118,13 +113,12 @@ char	*get_next_line(int fd)
     if (fd == -1)
         return (0);
     result = get_next_line(fd);
-	while(result)
-	{
-    	printf("%s",result);
-    	free(result);
-		result = get_next_line(fd);
-	}
+    while (result != NULL)
+    {
+        printf("%s",result);
+        free(result);
+        result = get_next_line(fd);
+    }
     close(fd);
-	system("leaks -q a.out");
     return(0);
 }*/

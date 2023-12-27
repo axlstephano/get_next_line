@@ -6,7 +6,7 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:35:14 by axcastil          #+#    #+#             */
-/*   Updated: 2023/12/11 18:07:55 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/12/27 19:47:45 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 
 	new_str = NULL;
 	if (!*s || ft_strlen(s) <= start)
-		return (ft_strdup("\0"));
+	{
+		new_str = malloc(1);
+		new_str[0] = '\0';
+		return (new_str);
+	}
 	if (ft_strlen(s + start) <= len)
 		len = ft_strlen(s + start);
 	new_str = (char *)malloc(len + 1);
@@ -90,21 +94,19 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (new_str);
 }
 
-char	*ft_strdup(const char *s1)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	*duplicate;
-	char	*aux;
+	char	*string;
+	int		i;
 
-	duplicate = (char *)malloc(ft_strlen(s1) + 1);
-	if (!duplicate)
+	i = 0;
+	string = (char *)malloc(count * size);
+	if (!string)
 		return (NULL);
-	aux = duplicate;
-	while (*s1)
+	while (count--)
 	{
-		*duplicate = *s1;
-		duplicate++;
-		s1++;
+		string[i] = '\0';
+		i++;
 	}
-	*duplicate = '\0';
-	return (aux);
+	return (string);
 }
