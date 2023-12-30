@@ -6,11 +6,14 @@
 /*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 19:23:09 by axcastil          #+#    #+#             */
-/*   Updated: 2023/12/27 19:34:30 by axcastil         ###   ########.fr       */
+/*   Updated: 2023/12/30 18:27:23 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+//This function is responsible for concatenating the buffer 
+//where the characters read from the "reader" function will be entered.
 
 char	*joinandfree(char *result, char *buffer)
 {
@@ -20,6 +23,10 @@ char	*joinandfree(char *result, char *buffer)
 	free(result);
 	return (line);
 }
+
+//This function is responsible for storing the characters read after the line break (\n)
+//and saving them in the "result" variable of the main function, 
+//since these will be used if the function is called again
 
 char	*next_line(char	*buffer)
 {
@@ -45,6 +52,9 @@ char	*next_line(char	*buffer)
 	return (next);
 }
 
+//This function handles the return of the "reader" function, 
+//filtering the characters found until the line break (\n) is found.
+
 char	*liner(char	*buffer)
 {
 	char	*new_line;
@@ -59,6 +69,9 @@ char	*liner(char	*buffer)
 	new_line = ft_substr(buffer, 0, len);
 	return (new_line);
 }
+
+//This function reads the file, having the "BUFFER_SIZE" that we set 
+//as the reading pattern, and stops when it encounters a line break (\n)
 
 char	*reader(int fd, char *result)
 {
@@ -83,13 +96,19 @@ char	*reader(int fd, char *result)
 	return (result);
 }
 
+//This is the main function, here we will manage the extracted characters, 
+//both for the return in this function call, 
+//and for storing the rest of the read file (if there are even more characters)
+
 char	*get_next_line(int fd)
 {
 	static char	*result;
 	char		*new_line;
 
+	//Error handler.
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
+		//Takes the last storage and free.
 		if (result)
 		{
 			free(result);
