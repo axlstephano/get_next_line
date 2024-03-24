@@ -1,7 +1,5 @@
 # 01_Get_next_line
 
-# Get Next Line
-
 ## Description
 
 This is a simple C program that implements the "get_next_line" function, which reads a text file line by line. The code is designed to be used in a larger project or as a standalone utility.
