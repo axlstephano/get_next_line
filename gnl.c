@@ -12,22 +12,6 @@
 
 #include "get_next_line.h"
 
-//This function is responsible for concatenating the buffer 
-//where the characters read from the "reader" function will be entered.
-
-char	*joinandfree(char *result, char *buffer)
-{
-	char	*line;
-
-	line = ft_strjoin(result, buffer);
-	free(result);
-	return (line);
-}
-
-//This function is responsible for storing the characters read after the line break (\n)
-//and saving them in the "result" variable of the main function, 
-//since these will be used if the function is called again
-
 char	*next_line(char	*buffer)
 {
 	char	*next;
@@ -78,34 +62,30 @@ char	*reader(int fd, char *result)
 	int		byte_read;
 	char	*buffer;
 
-	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char))
+	result = ft_calloc(1, sizeof(char));
+	byte_read = 1;
 	while (byte_read > 0)
 	{
+		buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 		byte_read = read(fd, buffer, BUFFER_SIZE);
 		if (byte_read == -1)
 			return (free(buffer), NULL);
-		buffer[byte_read] = 0;
-		result = joinandfree(result, buffer);
-		if (ft_strchr(buffer, '\n'))
+		buffer[BUFFER_SIZE] = 0;
+		result = ft_strjoin(result, buffer);
+		free(buffer);
+		if (ft_strchr(result, '\n'))
 			break ;
 	}
-	free(buffer);
 	return (result);
 }
-
-//This is the main function, here we will manage the extracted characters, 
-//both for the return in this function call, 
-//and for storing the rest of the read file (if there are even more characters)
 
 char	*get_next_line(int fd)
 {
 	static char	*result;
 	char		*new_line;
 
-	//Error handler.
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		//Takes the last storage and free.
 		if (result)
 		{
 			free(result);
