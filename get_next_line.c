@@ -81,6 +81,11 @@ char	*reader(int fd, char *result)
 	if (!result)
 		result = ft_calloc(1, sizeof(char));
 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if(!buffer)
+	{
+		free(result);
+		return (NULL);
+	}
 	byte_read = 1;
 	while (byte_read > 0)
 	{
