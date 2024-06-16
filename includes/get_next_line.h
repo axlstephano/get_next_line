@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: axcastil <axcastil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: axcastil <axcastil@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 00:33:57 by axcastil          #+#    #+#             */
-/*   Updated: 2023/12/27 19:35:49 by axcastil         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:10:19 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *s, int c);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-void	*ft_calloc(size_t count, size_t size);
+char	*gnl_strjoin(char const *s1, char const *s2);
+size_t	gnl_strlen(const char *str);
+char	*gnl_strchr(const char *s, int c);
+char	*gnl_substr(const char *s, unsigned int start, size_t len);
+void	*gnl_calloc(size_t count, size_t size);
 
 #endif
