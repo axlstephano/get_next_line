@@ -6,11 +6,11 @@
 /*   By: axcastil <axcastil@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 20:20:54 by axcastil          #+#    #+#             */
-/*   Updated: 2024/06/16 14:11:22 by axcastil         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:27:25 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "../includes/get_next_line_bonus.h"
 
 static char	*joinandfree(char *result, char *buffer)
 {

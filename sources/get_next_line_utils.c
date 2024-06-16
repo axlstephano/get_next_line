@@ -6,11 +6,11 @@
 /*   By: axcastil <axcastil@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:35:14 by axcastil          #+#    #+#             */
-/*   Updated: 2024/06/16 14:03:05 by axcastil         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:27:51 by axcastil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 char	*gnl_strjoin(char const *s1, char const *s2)
 {
